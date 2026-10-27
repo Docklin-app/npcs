@@ -17,7 +17,7 @@ button:disabled{opacity:.45;cursor:default}
 <div class="panel"><h2>1. Sambungkan wallet owner</h2><button id="b1">Connect wallet (BNB Chain)</button><p id="acct" class="mono muted"></p></div>
 <div class="panel"><h2>2. Tutup mint lama</h2><p class="muted">Menghentikan mint di kontrak v1 (0x7ab2…6556) supaya daftar holder tidak berubah.</p><button id="b2" disabled>Close old mint</button></div>
 <div class="panel"><h2>3. Deploy kontrak baru</h2><p class="muted">Gratis 2 per wallet, biaya mint 0,0002 BNB per NFT, royalty 5%. Bisa diubah nanti.</p><button id="b3" disabled>Deploy NPCSHOOD v2</button><p id="addr" class="mono"></p></div>
-<div class="panel"><h2>4. Airdrop holder lama</h2><p class="muted">Holder v1 dapat NFT dengan ID yang sama di kontrak baru. Dikirim per 100, tiap batch satu tanda tangan.</p><button id="b4" disabled>Airdrop</button><p id="drop" class="muted"></p></div>
+<div class="panel"><h2>4. Airdrop holder lama</h2><p class="muted">Semua holder v1 (463 NFT) dikirim NFT v2, ID mulai setelah mint publik yang sudah ada. Mint dijeda otomatis selama airdrop lalu dibuka lagi. Per 100, tiap batch satu tanda tangan.</p><label class="muted">Mulai dari holder v1 # <input id="dstart" type="number" min="1" value="1" style="width:90px"></label><br><button id="b4" disabled>Airdrop</button><p id="drop" class="muted"></p></div>
 <div class="panel"><h2>5. Buka mint</h2><button id="b5" disabled>Open mint v2</button>
 <button id="b6" disabled>Agent ID gate OFF (semua wallet bisa mint)</button></div>
 <p id="log" class="muted"></p>
@@ -31,19 +31,20 @@ async function ensureChain(){try{await ethereum.request({method:'wallet_switchEt
 async function receipt(h){for(;;){const r=await ethereum.request({method:'eth_getTransactionReceipt',params:[h]});if(r)return r;await new Promise(z=>setTimeout(z,2000))}}
 const call=(to,data)=>ethereum.request({method:'eth_call',params:[{to,data},'latest']});
 async function send(tx,label){log('Sign '+label+' di wallet…');const h=await ethereum.request({method:'eth_sendTransaction',params:[Object.assign({from:acct},tx)]});log('Menunggu konfirmasi… tx '+h);const r=await receipt(h);if(r.status!=='0x1')throw new Error(label+' gagal, tx '+h);log(label+' berhasil ✓','ok');return r}
-async function dropState(){if(!contract)return;const n=Number(BigInt(await call(OLD,'0xa2309ff8'))),d=Number(BigInt(await call(contract,'0xa2309ff8')));$('drop').textContent='Holder lama: '+n+' NFT · sudah di-airdrop: '+Math.min(d,n);$('b4').disabled=!acct||d>=n;return {n,d}}
+async function dropState(){if(!contract)return;const n=Number(BigInt(await call(OLD,'0xa2309ff8'))),t=Number(BigInt(await call(contract,'0xa2309ff8')));const nx=Number(localStorage.getItem('npcs_drop_next')||$('dstart').value||1);$('dstart').value=nx;$('drop').textContent='Holder lama: '+n+' NFT · v2 total ter-mint: '+t+' · airdrop berikutnya: holder #'+(nx>n?'selesai':nx);$('b4').disabled=!acct||nx>n;return {n,nx}}
 function show(){$('b2').disabled=!acct;$('b3').disabled=!acct||!!contract;if(contract){$('addr').innerHTML='Kontrak v2: <a target="_blank" href="https://bscscan.com/address/'+contract+'">'+contract+'</a>';$('b5').disabled=$('b6').disabled=!acct;dropState()}}
 $('b1').onclick=async()=>{try{if(!window.ethereum)return log('Wallet tidak ditemukan. Buka halaman ini di browser MetaMask/Trust/OKX/Binance Wallet.','bad');
  [acct]=await ethereum.request({method:'eth_requestAccounts'});await ensureChain();$('acct').textContent='Wallet: '+acct;
  const own=acct.toLowerCase()===OWNER;log(own?'Terhubung sebagai owner ✓':'Peringatan: ini bukan wallet owner (0xe070…8327).',own?'ok':'bad');show()}catch(e){log(e.message||String(e),'bad')}};
 $('b2').onclick=async()=>{try{await send({to:OLD,data:'0xf8004d31'+pad(0)},'Close old mint')}catch(e){log(e.message||String(e),'bad')}};
 $('b3').onclick=async()=>{try{$('b3').disabled=true;const r=await send({data:BYTECODE+encString(BASE),gas:'0x2DC6C0'},'Deploy v2');contract=r.contractAddress;localStorage.setItem('npcs_v2',contract);show();log('Berhasil! Kirim alamat ini ke Hark: '+contract,'ok')}catch(e){$('b3').disabled=false;log(e.message||String(e),'bad')}};
-$('b4').onclick=async()=>{try{$('b4').disabled=true;let s=await dropState();
- while(s.d<s.n){const end=Math.min(s.d+100,s.n),to=[];log('Membaca holder #'+(s.d+1)+'–'+end+'…');
-  for(let i=s.d+1;i<=end;i++){to.push((await call(OLD,'0x6352211e'+pad(i))).slice(-40))}
+$('b4').onclick=async()=>{try{$('b4').disabled=true;localStorage.setItem('npcs_drop_next',String(Math.max(1,Number($('dstart').value)||1)));let s=await dropState();
+ const wasOpen=BigInt(await call(contract,'0x24bbd049'))===1n;if(wasOpen&&s.nx<=s.n)await send({to:contract,data:'0xf8004d31'+pad(0)},'Jeda mint sementara');
+ while(s.nx<=s.n){const end=Math.min(s.nx+99,s.n),to=[];log('Membaca holder v1 #'+s.nx+'–'+end+'…');
+  for(let i=s.nx;i<=end;i++){to.push((await call(OLD,'0x6352211e'+pad(i))).slice(-40))}
   const data='0x729ad39e'+pad(32)+pad(to.length)+to.map(a=>a.padStart(64,'0')).join('');
-  await send({to:contract,data,gas:'0x'+(60000+to.length*45000).toString(16)},'Airdrop #'+(s.d+1)+'–'+end);s=await dropState()}
- log('Airdrop selesai ✓','ok')}catch(e){log(e.message||String(e),'bad');dropState()}};
+  await send({to:contract,data,gas:'0x'+(60000+to.length*45000).toString(16)},'Airdrop holder #'+s.nx+'–'+end);localStorage.setItem('npcs_drop_next',String(end+1));s=await dropState()}
+ log('Airdrop selesai ✓','ok');if(wasOpen)await send({to:contract,data:'0xf8004d31'+pad(1)},'Buka mint lagi')}catch(e){log(e.message||String(e),'bad');dropState()}};
 $('b5').onclick=async()=>{try{await send({to:contract,data:'0xf8004d31'+pad(1)},'Open mint v2')}catch(e){log(e.message||String(e),'bad')}};
 $('b6').onclick=async()=>{try{await send({to:contract,data:'0xe7210998'+GATE.padStart(64,'0')+pad(0)},'Agent ID gate OFF')}catch(e){log(e.message||String(e),'bad')}};
 show();
