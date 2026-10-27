@@ -171,6 +171,7 @@
           <div id="w-box" hidden>
             <p id="w-acct" class="x-muted"></p>
             <div class="x-row"><span>How many</span><div class="x-stepper"><button type="button" id="w-minus">−</button><b id="w-q">1</b><button type="button" id="w-plus">+</button></div></div>
+            <div class="x-row"><span>Pay with</span><div class="x-stepper"><button type="button" id="w-bnb" aria-pressed="true">BNB</button><button type="button" id="w-usdt" aria-pressed="false">USDT</button></div></div>
             <p id="w-cost"></p>
             <button type="button" class="x-go x-big" id="w-mint">Mint</button>
           </div>
@@ -440,35 +441,55 @@
     </script>
   <script>
 (function(){
-var C="0x7ab2d6c027b800cf22bd1cc0048da6ee4c0d6556",RPCS=["https://bsc-dataseed.bnbchain.org","https://bsc-rpc.publicnode.com","https://bsc-dataseed1.defibit.io","https://1rpc.io/bnb"];
-var $=function(i){return document.getElementById(i)},acct=null,q=1,quoteV=null;
+var C="0x7ab2d6c027b800cf22bd1cc0048da6ee4c0d6556",U="0x55d398326f99059fF775485246999027B3197955",RPCS=["https://bsc-dataseed.bnbchain.org","https://bsc-rpc.publicnode.com","https://bsc-dataseed1.defibit.io","https://bsc-dataseed2.ninicoin.io","https://1rpc.io/bnb"];
+var $=function(i){return document.getElementById(i)},acct=null,q=1,pay="BNB",qt=null;
 function pad(h){return h.replace(/^0x/,"").padStart(64,"0")}
-async function call(data){for(var i=0;i<RPCS.length;i++){try{var r=await fetch(RPCS[i],{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[{to:C,data:data},"latest"]})});var j=await r.json();if(j.result)return j.result}catch(e){}}throw new Error("RPC error")}
+async function rawCall(to,data){var tx={to:to,data:data};
+ if(acct&&window.ethereum){try{var r0=await ethereum.request({method:"eth_call",params:[tx,"latest"]});if(r0&&r0!=="0x")return r0}catch(e){}}
+ for(var i=0;i<RPCS.length;i++){try{var r=await fetch(RPCS[i],{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[tx,"latest"]})});var j=await r.json();if(j.result&&j.result!=="0x")return j.result}catch(e){}}
+ throw new Error("Could not reach BNB Chain")}
+function call(d){return rawCall(C,d)}
 function word(h,n){return BigInt("0x"+h.slice(2+64*n,2+64*(n+1)))}
-function bnb(w){return (Number(w)/1e18).toFixed(5)}
+function fmt(w,d){return (Number(w)/1e18).toFixed(d)}
+function msg(t,html){if(html)$("w-msg").innerHTML=t;else $("w-msg").textContent=t}
 async function stats(){try{var t=Number(word(await call("0xa2309ff8"),0)),o=word(await call("0x24bbd049"),0)===1n;
  var b=document.querySelector(".x-count b");if(b)b.textContent=t.toLocaleString("en-US");
  var f=document.querySelector(".x-fill");if(f)f.style.width=(t/50)+"%";
- var sp=document.querySelector(".x-count [data-i=notOpen]");if(sp&&o){sp.textContent="Minting live";sp.style.color="#4be3b0";sp.removeAttribute("data-i")}
- return o}catch(e){}}
+ var pb=document.querySelector(".x-progress");if(pb)pb.setAttribute("aria-valuenow",t);
+ var sp=document.querySelector(".x-count span");if(sp&&o){sp.textContent="Minting live";sp.style.color="#4be3b0";sp.removeAttribute("data-i")}
+ return o}catch(e){return null}}
+async function wait(h){for(;;){var r=await ethereum.request({method:"eth_getTransactionReceipt",params:[h]});if(r)return r;await new Promise(function(z){setTimeout(z,2000)})}}
+function txLink(h){return ' <a target="_blank" rel="noopener" href="https://bscscan.com/tx/'+h+'">view tx</a>'}
 async function refresh(){if(!acct)return;$("w-q").textContent=q;$("w-minus").disabled=q<=1;$("w-plus").disabled=q>=12;
- try{var a=pad(acct),r=await call("0x8f79306e"+a+pad(q.toString(16)));quoteV=word(r,0);var paid=Number(word(r,3));
+ $("w-bnb").setAttribute("aria-pressed",pay==="BNB");$("w-usdt").setAttribute("aria-pressed",pay==="USDT");
+ $("w-bnb").style.opacity=pay==="BNB"?1:.5;$("w-usdt").style.opacity=pay==="USDT"?1:.5;
+ try{var a=pad(acct),r=await call("0x8f79306e"+a+pad(q.toString(16)));qt={bnb:word(r,0),usdt:word(r,1),paid:Number(word(r,3))};
  var m=Number(word(await call("0x3cef28d2"+a),0)),ag=word(await call("0x4eab3ef2"+a),0)===1n,open=await stats();
  $("w-acct").textContent="Wallet "+acct.slice(0,6)+"…"+acct.slice(-4)+" · minted "+m+" of 12";
- $("w-cost").textContent=paid?(paid+" paid, "+(q-paid)+" free · ≈ "+bnb(quoteV)+" BNB"):"Free: no payment.";
- var bad=!open?"Minting is not open yet.":!ag?"This wallet holds no Binance Agent ID, so it cannot mint.":m+q>12?"That would take this wallet past 12.":"";
- $("w-msg").textContent=bad;$("w-mint").disabled=!!bad;$("w-mint").textContent="Mint "+q}catch(e){$("w-msg").textContent="Could not read the chain. Try again."}}
-async function receipt(h){for(;;){var r=await ethereum.request({method:"eth_getTransactionReceipt",params:[h]});if(r)return r;await new Promise(function(z){setTimeout(z,2000)})}}
-$("w-connect").onclick=async function(){try{if(!window.ethereum){$("w-msg").textContent="No browser wallet found. Open this page in MetaMask, Trust or OKX.";return}
+ $("w-cost").textContent=qt.paid?(qt.paid+" paid, "+(q-qt.paid)+" free · "+(pay==="BNB"?"≈ "+fmt(qt.bnb,5)+" BNB":fmt(qt.usdt,2)+" USDT")):"Free — only gas.";
+ var bad=open===false?"Minting is not open yet.":!ag?"This wallet holds no Binance Agent ID, so it cannot mint.":m+q>12?"That would take this wallet past 12.":"";
+ msg(bad);$("w-mint").disabled=!!bad;$("w-mint").textContent=(pay==="USDT"&&qt.paid?"Approve & mint ":"Mint ")+q}catch(e){msg(e.message)}}
+$("w-connect").onclick=async function(){try{if(!window.ethereum){msg("No browser wallet found. Open this page inside MetaMask, Trust Wallet, OKX or Binance Wallet.");return}
  acct=(await ethereum.request({method:"eth_requestAccounts"}))[0];
  try{await ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0x38"}]})}catch(e){if(e.code===4902)await ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0x38",chainName:"BNB Smart Chain",nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},rpcUrls:["https://bsc-dataseed.bnbchain.org"],blockExplorerUrls:["https://bscscan.com"]}]});else throw e}
- $("w-connect").hidden=true;$("w-box").hidden=false;refresh()}catch(e){$("w-msg").textContent=e.message||String(e)}};
+ if(ethereum.on){ethereum.on("accountsChanged",function(x){acct=x[0]||null;refresh()});ethereum.on("chainChanged",function(){location.reload()})}
+ $("w-connect").hidden=true;$("w-box").hidden=false;refresh()}catch(e){msg(e.message||String(e))}};
 $("w-minus").onclick=function(){q=Math.max(1,q-1);refresh()};$("w-plus").onclick=function(){q=Math.min(12,q+1);refresh()};
-$("w-mint").onclick=async function(){try{$("w-mint").disabled=true;$("w-msg").textContent="Confirm in your wallet…";
- var v=quoteV*101n/100n,h=await ethereum.request({method:"eth_sendTransaction",params:[{from:acct,to:C,data:"0xa0712d68"+pad(q.toString(16)),value:"0x"+v.toString(16),gas:"0xDBBA0"}]});
- $("w-msg").innerHTML='Minting… <a target="_blank" href="https://bscscan.com/tx/'+h+'">view tx</a>';var r=await receipt(h);
- $("w-msg").innerHTML=r.status==="0x1"?'Minted ✓ <a target="_blank" href="https://bscscan.com/tx/'+h+'">view tx</a>':"Mint failed.";refresh()}catch(e){$("w-msg").textContent=e.message||String(e);$("w-mint").disabled=false}};
-stats();
+$("w-bnb").onclick=function(){pay="BNB";refresh()};$("w-usdt").onclick=function(){pay="USDT";refresh()};
+$("w-mint").onclick=async function(){var btn=$("w-mint");try{btn.disabled=true;await refresh();var h,r;
+ if(pay==="USDT"&&qt.paid){
+  var al=word(await rawCall(U,"0xdd62ed3e"+pad(acct)+pad(C)),0);
+  if(al<qt.usdt){msg("Step 1 of 2: approve "+fmt(qt.usdt,2)+" USDT in your wallet…");
+   h=await ethereum.request({method:"eth_sendTransaction",params:[{from:acct,to:U,data:"0x095ea7b3"+pad(C)+pad(qt.usdt.toString(16))}]});
+   msg("Approving…"+txLink(h),1);r=await wait(h);if(r.status!=="0x1")throw new Error("Approve failed")}
+  msg("Step 2 of 2: confirm the mint in your wallet…");
+  h=await ethereum.request({method:"eth_sendTransaction",params:[{from:acct,to:C,data:"0xe8531641"+pad(q.toString(16))+pad(U),gas:"0xDBBA0"}]});
+ }else{msg("Confirm the mint in your wallet…");
+  var v=qt.paid?qt.bnb*101n/100n:0n;
+  h=await ethereum.request({method:"eth_sendTransaction",params:[{from:acct,to:C,data:"0xa0712d68"+pad(q.toString(16)),value:"0x"+v.toString(16),gas:"0xDBBA0"}]})}
+ msg("Minting…"+txLink(h),1);r=await wait(h);
+ msg(r.status==="0x1"?"Minted ✓ Your NPCs are in your wallet."+txLink(h):"Mint failed."+txLink(h),1);await refresh()}catch(e){msg(e.message||String(e));btn.disabled=false}};
+stats();setInterval(stats,30000);
 })();
 </script>
 </body>
