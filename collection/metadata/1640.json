@@ -1,0 +1,47 @@
+{
+ "name": "NPCSHOOD #1640",
+ "description": "NPCSHOOD: 5,000 pixel NPCs in hoodies. They were background characters. Now they're yours.",
+ "image": "ipfs://<CID>/1640.png",
+ "attributes": [
+  {
+   "trait_type": "Background",
+   "value": "Lava"
+  },
+  {
+   "trait_type": "Skin",
+   "value": "Dark"
+  },
+  {
+   "trait_type": "Hoodie",
+   "value": "Red"
+  },
+  {
+   "trait_type": "Head",
+   "value": "Hood Up"
+  },
+  {
+   "trait_type": "Eyes",
+   "value": "X Eyes"
+  },
+  {
+   "trait_type": "Mouth",
+   "value": "Smile"
+  },
+  {
+   "trait_type": "Item",
+   "value": "None"
+  },
+  {
+   "trait_type": "Overhead",
+   "value": "Speech ..."
+  },
+  {
+   "trait_type": "Tier",
+   "value": "Uncommon"
+  },
+  {
+   "trait_type": "Rank",
+   "value": 1699
+  }
+ ]
+}

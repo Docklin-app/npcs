@@ -1,0 +1,47 @@
+{
+ "name": "NPCSHOOD #2968",
+ "description": "NPCSHOOD: 5,000 pixel NPCs in hoodies. They were background characters. Now they're yours.",
+ "image": "ipfs://<CID>/2968.png",
+ "attributes": [
+  {
+   "trait_type": "Background",
+   "value": "Gold Vault"
+  },
+  {
+   "trait_type": "Skin",
+   "value": "Light"
+  },
+  {
+   "trait_type": "Hoodie",
+   "value": "Forest"
+  },
+  {
+   "trait_type": "Head",
+   "value": "Hood Up"
+  },
+  {
+   "trait_type": "Eyes",
+   "value": "Laser"
+  },
+  {
+   "trait_type": "Mouth",
+   "value": "Frown"
+  },
+  {
+   "trait_type": "Item",
+   "value": "Coin Bag"
+  },
+  {
+   "trait_type": "Overhead",
+   "value": "None"
+  },
+  {
+   "trait_type": "Tier",
+   "value": "Rare"
+  },
+  {
+   "trait_type": "Rank",
+   "value": 657
+  }
+ ]
+}

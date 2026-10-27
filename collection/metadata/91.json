@@ -1,0 +1,47 @@
+{
+ "name": "NPCSHOOD #91",
+ "description": "NPCSHOOD: 5,000 pixel NPCs in hoodies. They were background characters. Now they're yours.",
+ "image": "ipfs://<CID>/91.png",
+ "attributes": [
+  {
+   "trait_type": "Background",
+   "value": "Dungeon Stone"
+  },
+  {
+   "trait_type": "Skin",
+   "value": "Zombie"
+  },
+  {
+   "trait_type": "Hoodie",
+   "value": "Sky"
+  },
+  {
+   "trait_type": "Head",
+   "value": "Cap"
+  },
+  {
+   "trait_type": "Eyes",
+   "value": "Shades"
+  },
+  {
+   "trait_type": "Mouth",
+   "value": "Mask"
+  },
+  {
+   "trait_type": "Item",
+   "value": "Wooden Staff"
+  },
+  {
+   "trait_type": "Overhead",
+   "value": "Quest !"
+  },
+  {
+   "trait_type": "Tier",
+   "value": "Rare"
+  },
+  {
+   "trait_type": "Rank",
+   "value": 495
+  }
+ ]
+}

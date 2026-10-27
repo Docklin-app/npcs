@@ -1,0 +1,47 @@
+{
+ "name": "NPCSHOOD #3721",
+ "description": "NPCSHOOD: 5,000 pixel NPCs in hoodies. They were background characters. Now they're yours.",
+ "image": "ipfs://<CID>/3721.png",
+ "attributes": [
+  {
+   "trait_type": "Background",
+   "value": "Desert Sand"
+  },
+  {
+   "trait_type": "Skin",
+   "value": "Light"
+  },
+  {
+   "trait_type": "Hoodie",
+   "value": "Teal"
+  },
+  {
+   "trait_type": "Head",
+   "value": "Wizard Hat"
+  },
+  {
+   "trait_type": "Eyes",
+   "value": "Blank Dots"
+  },
+  {
+   "trait_type": "Mouth",
+   "value": "Flat"
+  },
+  {
+   "trait_type": "Item",
+   "value": "Potion"
+  },
+  {
+   "trait_type": "Overhead",
+   "value": "Quest !"
+  },
+  {
+   "trait_type": "Tier",
+   "value": "Common"
+  },
+  {
+   "trait_type": "Rank",
+   "value": 4254
+  }
+ ]
+}

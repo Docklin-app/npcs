@@ -1,0 +1,47 @@
+{
+ "name": "NPCSHOOD #33",
+ "description": "NPCSHOOD: 5,000 pixel NPCs in hoodies. They were background characters. Now they're yours.",
+ "image": "ipfs://<CID>/33.png",
+ "attributes": [
+  {
+   "trait_type": "Background",
+   "value": "Ocean"
+  },
+  {
+   "trait_type": "Skin",
+   "value": "Alien"
+  },
+  {
+   "trait_type": "Hoodie",
+   "value": "Sky"
+  },
+  {
+   "trait_type": "Head",
+   "value": "Guard Helmet"
+  },
+  {
+   "trait_type": "Eyes",
+   "value": "Wide"
+  },
+  {
+   "trait_type": "Mouth",
+   "value": "Mask"
+  },
+  {
+   "trait_type": "Item",
+   "value": "Fish"
+  },
+  {
+   "trait_type": "Overhead",
+   "value": "Zzz"
+  },
+  {
+   "trait_type": "Tier",
+   "value": "Epic"
+  },
+  {
+   "trait_type": "Rank",
+   "value": 101
+  }
+ ]
+}
