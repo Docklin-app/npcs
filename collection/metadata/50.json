@@ -1,7 +1,7 @@
 {
  "name": "NPCSHOOD #50",
  "description": "NPCSHOOD: 5,000 pixel NPCs in hoodies. They were background characters. Now they're yours.",
- "image": "ipfs://<CID>/50.png",
+ "image": "https://npcshood.xyz/collection/images/50.png",
  "attributes": [
   {
    "trait_type": "Background",
