@@ -121,8 +121,8 @@
           <p class="x-count"><b>0</b> / 5,000 · <span data-i="notOpen">Minting not open yet</span></p>
           <ul class="x-facts">
             <li data-i="f1">2 free per wallet</li>
-            <li data-i="f2">Then $1 each: BNB, 1 USDT or 10,000 NPC</li>
-            <li data-i="f3">12 per wallet at most</li>
+            <li data-i="f2">Mint fee 0.0002 BNB per NFT</li>
+            <li data-i="f3">2 per wallet</li>
             <li data-i="f4">Each picture shows a block after its mint</li>
           </ul>
         </section>
@@ -146,11 +146,9 @@
             </div>
           </div>
           <div class="x-ways" role="radiogroup">
-            <label class="x-on"><input type="radio" name="pay" value="BNB" checked /><b>BNB</b><small data-i="wBnb">≈ $1 in BNB</small></label>
-            <label><input type="radio" name="pay" value="USDT" /><b>USDT</b><small>1 USDT</small></label>
-            <label><input type="radio" name="pay" value="NPC" /><b>NPC</b><small data-i="wNpc">10,000 NPC</small></label>
+            <label class="x-on"><input type="radio" name="pay" value="BNB" checked /><b>BNB</b><small data-i="wBnb">0.0002 BNB each</small></label>
           </div>
-          <p class="x-muted" data-i="freeNote">Each wallet's first 2 are free; 12 per wallet at most.</p>
+          <p class="x-muted" data-i="freeNote">Free mint, 2 per wallet; each carries a 0.0002 BNB mint fee.</p>
           <label class="x-field"><span data-i="walletLabel">The agent's wallet (optional)</span><input id="wallet-in" type="text" placeholder="0x…" spellcheck="false" autocomplete="off" /></label>
           <div class="x-row">
             <span data-i="promptLang">Prompt language</span>
@@ -166,12 +164,12 @@
 
         <section class="x-panel" data-pane="wallet" hidden>
           <h2 class="x-px">Mint</h2>
-          <p id="w-note" class="x-muted">Contract: <a href="https://bscscan.com/address/0x7ab2d6c027b800cf22bd1cc0048da6ee4c0d6556" target="_blank" rel="noopener">0x7ab2…6556</a></p>
+          <p id="w-note" class="x-muted">Contract: <a href="https://bscscan.com/address/0xedb8830853e0e3a04582feb2f2401263e67e7346" target="_blank" rel="noopener">0xedb8…7346</a></p>
           <button type="button" class="x-go x-big" id="w-connect">Connect wallet</button>
           <div id="w-box" hidden>
             <p id="w-acct" class="x-muted"></p>
             <div class="x-row"><span>How many</span><div class="x-stepper"><button type="button" id="w-minus">−</button><b id="w-q">1</b><button type="button" id="w-plus">+</button></div></div>
-            <div class="x-row"><span>Pay with</span><div class="x-stepper"><button type="button" id="w-bnb" aria-pressed="true">BNB</button><button type="button" id="w-usdt" aria-pressed="false">USDT</button></div></div>
+            <div hidden><button type="button" id="w-bnb">BNB</button><button type="button" id="w-usdt">USDT</button></div>
             <p id="w-cost"></p>
             <button type="button" class="x-go x-big" id="w-mint">Mint</button>
           </div>
@@ -259,11 +257,11 @@
           en: {
             navMint: "Mint", navGallery: "Gallery", navGuide: "Guide for agents",
             lede: "5,000 one-of-a-kind pixel NPCs in hoodies, generated from 8 trait layers — no two alike. Drawn and kept entirely on BNB Chain. Only wallets holding a Binance Agent ID can mint them.",
-            notOpen: "Minting not open yet", f1: "2 free per wallet", f2: "Then $1 each: BNB, 1 USDT or 10,000 NPC", f3: "12 per wallet at most", f4: "Each picture shows a block after its mint",
+            notOpen: "Minting not open yet", f1: "2 free per wallet", f2: "Mint fee 0.0002 BNB per NFT", f3: "2 per wallet", f4: "Each picture shows a block after its mint",
             tAgent: "Agent", tWallet: "Wallet", tKinds: "Traits", tLatest: "Gallery",
             agentTitle: "Mint with an agent",
             agentIntro: "No wallet needed here. Choose how many and how to pay, then send the prompt below to an AI agent whose wallet holds a Binance Agent ID; it mints from its own wallet.",
-            howMany: "How many", wBnb: "≈ $1 in BNB", wNpc: "10,000 NPC", freeNote: "Each wallet's first 2 are free; 12 per wallet at most.",
+            howMany: "How many", wBnb: "0.0002 BNB each", wNpc: "10,000 NPC", freeNote: "Free mint, 2 per wallet; each carries a 0.0002 BNB mint fee.",
             walletLabel: "The agent's wallet (optional)", promptLang: "Prompt language", copy: "Copy the prompt", copied: "Copied ✓",
             notOpenNote: "Minting is not open yet: an agent sent this now is told to stop at the first check.",
             notDeployed: "The NPCSHOOD contracts are not deployed yet.", connect: "Connect wallet",
@@ -276,11 +274,11 @@
           id: {
             navMint: "Mint", navGallery: "Galeri", navGuide: "Panduan untuk agent",
             lede: "5.000 NPC pixel berhoodie yang unik, dibuat dari 8 lapisan atribut — tidak ada yang kembar. Digambar dan disimpan sepenuhnya di BNB Chain. Hanya wallet yang punya Binance Agent ID yang bisa mint.",
-            notOpen: "Minting belum dibuka", f1: "2 gratis per wallet", f2: "Lalu $1 per buah: BNB, 1 USDT atau 10.000 NPC", f3: "Maksimal 12 per wallet", f4: "Tiap gambar muncul satu blok setelah mint",
+            notOpen: "Minting belum dibuka", f1: "2 gratis per wallet", f2: "Biaya mint 0,0002 BNB per NFT", f3: "2 per wallet", f4: "Tiap gambar muncul satu blok setelah mint",
             tAgent: "Agent", tWallet: "Wallet", tKinds: "Atribut", tLatest: "Galeri",
             agentTitle: "Mint lewat agent",
             agentIntro: "Tidak perlu wallet di sini. Pilih jumlah dan cara bayar, lalu kirim prompt di bawah ke AI agent yang wallet-nya punya Binance Agent ID; agent itu mint dari wallet-nya sendiri.",
-            howMany: "Jumlah", wBnb: "≈ $1 dalam BNB", wNpc: "10.000 NPC", freeNote: "2 pertama tiap wallet gratis; maksimal 12 per wallet.",
+            howMany: "Jumlah", wBnb: "0,0002 BNB per buah", wNpc: "10.000 NPC", freeNote: "Mint gratis, 2 per wallet; tiap NFT ada biaya mint 0,0002 BNB.",
             walletLabel: "Wallet agent (opsional)", promptLang: "Bahasa prompt", copy: "Salin prompt", copied: "Tersalin ✓",
             notOpenNote: "Minting belum dibuka: agent yang menerima ini sekarang akan diminta berhenti di pengecekan pertama.",
             notDeployed: "Kontrak NPCSHOOD belum di-deploy.", connect: "Hubungkan wallet",
@@ -350,34 +348,34 @@
 
         function prompt() {
           var w = $("#wallet-in").value.trim();
-          var tok = pay !== "BNB";
+          var tok = false;
           if (plang === "en") {
             return "Mint " + q + " NPCSHOOD NFT" + (q > 1 ? "s" : "") + " on BNB Chain (chain id 56) from " + (w ? "your wallet " + w : "your own wallet") + ".\n\n" +
               "About it: NPCSHOOD is 5,000 one-of-a-kind pixel NPCs in hoodies, generated from 8 trait layers and kept entirely on chain. Only a wallet holding a Binance .ai Agent ID can mint, and only to itself.\n" +
-              "Each wallet mints 2 free, then pays $1 each (in BNB, 1 USDT or 10,000 NPC), 12 per wallet at most.\n\n" +
-              "NFT contract: 0x7ab2d6c027b800cf22bd1cc0048da6ee4c0d6556\n" + (tok ? (pay === "USDT" ? "USDT token: 0x55d398326f99059fF775485246999027B3197955\n" : "NPC token: not launched yet, pay in BNB or USDT instead\n") : "") + "Use only the addresses in this message.\n\n" +
+              "Free mint, 2 per wallet, with a mint fee of 0.0002 BNB per NFT.\n\n" +
+              "NFT contract: 0xedb8830853e0e3a04582feb2f2401263e67e7346\n" + (tok ? (pay === "USDT" ? "USDT token: 0x55d398326f99059fF775485246999027B3197955\n" : "NPC token: not launched yet, pay in BNB or USDT instead\n") : "") + "Use only the addresses in this message.\n\n" +
               "Steps:\n1. Read mintOpen(). If false, stop and tell me minting is not open.\n" +
               "2. Read hasAgentId(<wallet>). If false, stop: this wallet holds no Agent ID.\n" +
               "3. Read quote(<wallet>, " + q + ") for the cost in BNB, USDT and NPC and how many are paid.\n" +
-              "4. " + (tok ? "Pay in " + pay + ": approve exactly the quoted " + pay + " amount, then call mintWithToken(" + q + ", " + pay + " token), gas limit 900000." : "Pay in BNB: call mint(" + q + ") with value = quote bnbWei + 1%, gas limit 900000.") + "\n" +
+              "4. " + (tok ? "Pay in " + pay + ": approve exactly the quoted " + pay + " amount, then call mintWithToken(" + q + ", " + pay + " token), gas limit 900000." : "Pay the mint fee in BNB: call mint(" + q + ") with value = quote bnbWei (0.0002 BNB each), gas limit 900000.") + "\n" +
               "5. Wait for the Minted event, then read tokenURI(id) from the next block.\n\n" +
               "When done, tell me: tx hash, token ids, what was paid, and each NPC's name and rarity.";
           }
           return "Mint " + q + " NFT NPCSHOOD di BNB Chain (chain id 56) dari " + (w ? "wallet kamu " + w : "wallet kamu sendiri") + ".\n\n" +
             "Tentang ini: NPCSHOOD adalah 5.000 NPC pixel berhoodie yang unik, dibuat dari 8 lapisan atribut dan disimpan sepenuhnya on-chain. Hanya wallet yang punya Binance .ai Agent ID yang bisa mint, dan hanya ke dirinya sendiri.\n" +
-            "Tiap wallet mint 2 gratis, lalu bayar $1 per buah (dalam BNB, 1 USDT atau 10.000 NPC), maksimal 12 per wallet.\n\n" +
-            "Kontrak NFT: 0x7ab2d6c027b800cf22bd1cc0048da6ee4c0d6556\n" + (tok ? (pay === "USDT" ? "Token USDT: 0x55d398326f99059fF775485246999027B3197955\n" : "Token NPC: belum diluncurkan, bayar pakai BNB atau USDT\n") : "") + "Gunakan hanya alamat di pesan ini.\n\n" +
+            "Mint gratis, 2 per wallet, dengan biaya mint 0,0002 BNB per NFT.\n\n" +
+            "Kontrak NFT: 0xedb8830853e0e3a04582feb2f2401263e67e7346\n" + (tok ? (pay === "USDT" ? "Token USDT: 0x55d398326f99059fF775485246999027B3197955\n" : "Token NPC: belum diluncurkan, bayar pakai BNB atau USDT\n") : "") + "Gunakan hanya alamat di pesan ini.\n\n" +
             "Langkah:\n1. Baca mintOpen(). Jika false, berhenti dan beri tahu saya minting belum dibuka.\n" +
             "2. Baca hasAgentId(<wallet>). Jika false, berhenti: wallet ini tidak punya Agent ID.\n" +
             "3. Baca quote(<wallet>, " + q + ") untuk biaya dalam BNB, USDT dan NPC serta berapa yang berbayar.\n" +
-            "4. " + (tok ? "Bayar dengan " + pay + ": approve tepat sejumlah " + pay + " sesuai quote, lalu panggil mintWithToken(" + q + ", token " + pay + "), gas limit 900000." : "Bayar dengan BNB: panggil mint(" + q + ") dengan value = quote bnbWei + 1%, gas limit 900000.") + "\n" +
+            "4. " + (tok ? "Bayar dengan " + pay + ": approve tepat sejumlah " + pay + " sesuai quote, lalu panggil mintWithToken(" + q + ", token " + pay + "), gas limit 900000." : "Bayar biaya mint dengan BNB: panggil mint(" + q + ") dengan value = quote bnbWei (0,0002 BNB per buah), gas limit 900000.") + "\n" +
             "5. Tunggu event Minted, lalu baca tokenURI(id) dari blok berikutnya.\n\n" +
             "Setelah selesai, beri tahu saya: tx hash, token id, apa yang dibayar, serta nama dan rarity tiap NPC.";
         }
         function update() {
           $("#qty").textContent = q;
           $("#minus").disabled = q <= 1;
-          $("#plus").disabled = q >= 12;
+          $("#plus").disabled = q >= 2;
           $("#prompt").value = prompt();
         }
 
@@ -441,7 +439,7 @@
     </script>
   <script>
 (function(){
-var C="0x7ab2d6c027b800cf22bd1cc0048da6ee4c0d6556",U="0x55d398326f99059fF775485246999027B3197955",RPCS=["https://bsc-dataseed.bnbchain.org","https://bsc-rpc.publicnode.com","https://bsc-dataseed1.defibit.io","https://bsc-dataseed2.ninicoin.io","https://1rpc.io/bnb"];
+var C="0xedb8830853e0e3a04582feb2f2401263e67e7346",U="0x55d398326f99059fF775485246999027B3197955",RPCS=["https://bsc-dataseed.bnbchain.org","https://bsc-rpc.publicnode.com","https://bsc-dataseed1.defibit.io","https://bsc-dataseed2.ninicoin.io","https://1rpc.io/bnb"];
 var $=function(i){return document.getElementById(i)},acct=null,q=1,pay="BNB",qt=null;
 function pad(h){return h.replace(/^0x/,"").padStart(64,"0")}
 async function rawCall(to,data){var tx={to:to,data:data};
@@ -460,21 +458,21 @@ async function stats(){try{var t=Number(word(await call("0xa2309ff8"),0)),o=word
  return o}catch(e){return null}}
 async function wait(h){for(;;){var r=await ethereum.request({method:"eth_getTransactionReceipt",params:[h]});if(r)return r;await new Promise(function(z){setTimeout(z,2000)})}}
 function txLink(h){return ' <a target="_blank" rel="noopener" href="https://bscscan.com/tx/'+h+'">view tx</a>'}
-async function refresh(){if(!acct)return;$("w-q").textContent=q;$("w-minus").disabled=q<=1;$("w-plus").disabled=q>=12;
+async function refresh(){if(!acct)return;$("w-q").textContent=q;$("w-minus").disabled=q<=1;$("w-plus").disabled=q>=2;
  $("w-bnb").setAttribute("aria-pressed",pay==="BNB");$("w-usdt").setAttribute("aria-pressed",pay==="USDT");
  $("w-bnb").style.opacity=pay==="BNB"?1:.5;$("w-usdt").style.opacity=pay==="USDT"?1:.5;
  try{var a=pad(acct),r=await call("0x8f79306e"+a+pad(q.toString(16)));qt={bnb:word(r,0),usdt:word(r,1),paid:Number(word(r,3))};
  var m=Number(word(await call("0x3cef28d2"+a),0)),ag=word(await call("0x4eab3ef2"+a),0)===1n,open=await stats();
- $("w-acct").textContent="Wallet "+acct.slice(0,6)+"…"+acct.slice(-4)+" · minted "+m+" of 12";
- $("w-cost").textContent=qt.paid?(qt.paid+" paid, "+(q-qt.paid)+" free · "+(pay==="BNB"?"≈ "+fmt(qt.bnb,5)+" BNB":fmt(qt.usdt,2)+" USDT")):"Free — only gas.";
- var bad=open===false?"Minting is not open yet.":!ag?"This wallet holds no Binance Agent ID, so it cannot mint.":m+q>12?"That would take this wallet past 12.":"";
+ $("w-acct").textContent="Wallet "+acct.slice(0,6)+"…"+acct.slice(-4)+" · minted "+m+" of 2";
+ $("w-cost").textContent="Free mint · fee "+fmt(qt.bnb,4)+" BNB + gas";
+ var bad=open===false?"Minting is not open yet.":!ag?"This wallet holds no Binance Agent ID, so it cannot mint.":m+q>2?"That would take this wallet past 2.":"";
  msg(bad);$("w-mint").disabled=!!bad;$("w-mint").textContent=(pay==="USDT"&&qt.paid?"Approve & mint ":"Mint ")+q}catch(e){msg(e.message)}}
 $("w-connect").onclick=async function(){try{if(!window.ethereum){msg("No browser wallet found. Open this page inside MetaMask, Trust Wallet, OKX or Binance Wallet.");return}
  acct=(await ethereum.request({method:"eth_requestAccounts"}))[0];
  try{await ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0x38"}]})}catch(e){if(e.code===4902)await ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:"0x38",chainName:"BNB Smart Chain",nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},rpcUrls:["https://bsc-dataseed.bnbchain.org"],blockExplorerUrls:["https://bscscan.com"]}]});else throw e}
  if(ethereum.on){ethereum.on("accountsChanged",function(x){acct=x[0]||null;refresh()});ethereum.on("chainChanged",function(){location.reload()})}
  $("w-connect").hidden=true;$("w-box").hidden=false;refresh()}catch(e){msg(e.message||String(e))}};
-$("w-minus").onclick=function(){q=Math.max(1,q-1);refresh()};$("w-plus").onclick=function(){q=Math.min(12,q+1);refresh()};
+$("w-minus").onclick=function(){q=Math.max(1,q-1);refresh()};$("w-plus").onclick=function(){q=Math.min(2,q+1);refresh()};
 $("w-bnb").onclick=function(){pay="BNB";refresh()};$("w-usdt").onclick=function(){pay="USDT";refresh()};
 $("w-mint").onclick=async function(){var btn=$("w-mint");try{btn.disabled=true;await refresh();var h,r;
  if(pay==="USDT"&&qt.paid){
